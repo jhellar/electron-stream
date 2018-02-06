@@ -73,7 +73,13 @@ Electron.prototype._spawn = function(url){
   debug('spawn %s', url);
 
   var self = this;
-  var ps = self.ps = spawn(electron, [runner], {
+
+  var args = [runner];
+  if (self.opts.ignoreCertErrors) {
+    args.push('--ignore-certificate-errors');
+  }
+
+  var ps = self.ps = spawn(electron, args, {
     stdio: [null, null, null, 'ipc']
   });
 
